@@ -1,0 +1,11 @@
+.loader {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: scaleX(-50%) scaleY(-50%);
+}
+
+.Toastify__toast-body {
+	padding-left: 1rem;
+	font-size: 0.9rem;
+}
