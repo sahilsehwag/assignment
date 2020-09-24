@@ -13,7 +13,7 @@ const auth = async (req, res, next) => {
 	} else {
 		try {
 			// verifying if the token is valid or invalid
-			const decodedData = await jwt.verify(token, config.get("jwtSecret"));
+			const decodedData = await jwt.verify(token, process.env.jwtSecret);
 			req.user = decodedData.user;
 			req.user = await UserModel.findById(req.user.id);
 
