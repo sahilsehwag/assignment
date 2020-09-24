@@ -4,9 +4,12 @@
   "description": "RentoMojo Assignment",
   "main": "server.js",
   "scripts": {
-    "start": "node server",
+	"start": "node server",
+	"build": "cd client && npm run build",
+	"install-client": "cd client && npm install",
+	"heroku-postbuild": "npm run install-client && npm run build",
     "server": "nodemon server",
-    "client": "npm start --prefix client",
+    "client": "cd client && npm start",
     "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "keywords": [
