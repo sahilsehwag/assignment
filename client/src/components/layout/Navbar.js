@@ -36,7 +36,7 @@ const Navbar = ({ history }) => {
 	const guestLinks = (
 		<Fragment>
 			{
-				location.pathname === '/login' &&
+				(location.pathname === '/login' || location.pathname === '/') &&
 				<Link to="/register" className="nav-item nav-link">
 					Register
 				</Link>
