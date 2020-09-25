@@ -1,6 +1,4 @@
-const jwt    = require("jsonwebtoken");
-const config = require("config");
-
+const jwt       = require("jsonwebtoken");
 const UserModel = require("../models/User");
 
 const auth = async (req, res, next) => {
@@ -8,14 +6,14 @@ const auth = async (req, res, next) => {
 	if (!token) {
 		return res.status(401).json({
 			sucess: false,
-			message: "No Token, Auhtorization Denied"
+			message: "No Token, Authorization Failed"
 		});
 	} else {
 		try {
 			// verifying if the token is valid or invalid
-			const decodedData = await jwt.verify(token, process.env.jwtSecret);
+			const decodedData = await jwt.verify(token, process.env.jwtSecret)
 			req.user = decodedData.user;
-			req.user = await UserModel.findById(req.user.id);
+			req.user = await UserModel.findById(req.user.id)
 
 			// If user does not exist anymore
 			if (!req.user) {

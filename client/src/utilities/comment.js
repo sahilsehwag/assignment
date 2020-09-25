@@ -15,7 +15,6 @@ export const addReply = (comments, reply, parentId) => {
 	if (comments.length === 0)
 		return comments
 	return comments.map(comment => {
-		console.log(comment.text, comment._id, parentId)
 		if (comment._id === parentId) {
 			comment.replies = [...comment.replies, reply]
 		} else {

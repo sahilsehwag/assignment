@@ -1,6 +1,18 @@
-import React, { Fragment, useEffect } from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { Provider } from "react-redux";
+import React, {
+	Fragment,
+	useEffect,
+} from "react";
+
+import {
+	BrowserRouter as Router,
+	Route,
+	Switch
+} from "react-router-dom";
+
+import {
+	useSelector,
+	useDispatch,
+} from 'react-redux'
 
 import PrivateRoute from "./components/routing/PrivateRoute";
 
@@ -12,20 +24,31 @@ import Dashboard from "./components/dashboard/Dashboard";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-import { loadUser } from "./actions/AuthActions";
+import Loader from 'react-loader-spinner'
 
-import store from "store/store";
+import { loadUser } from "./actions/AuthActions";
 import setAuthToken from "utilities/setAuthToken";
 
-setAuthToken();
 
 const App = () => {
+	const dispatch = useDispatch()
+	const loading = useSelector(state => state.comment.loading)
+
 	useEffect(() => {
-		store.dispatch(loadUser());
+		setAuthToken();
+		dispatch(loadUser());
 	}, []);
 
 	return (
-		<Provider store={store}>
+		<Fragment>
+			<Loader 
+				className="loader"
+				type="TailSpin"
+				color="#dc3545"
+				height={100}
+				width={100}
+				visible={loading}
+			/>
 			<ToastContainer
 				position="top-right"
 				autoClose={2000}
@@ -49,7 +72,7 @@ const App = () => {
 					</section>
 				</Fragment>
 			</Router>
-		</Provider>
+		</Fragment>
 	);
 };
 

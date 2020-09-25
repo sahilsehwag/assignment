@@ -1,10 +1,11 @@
 const express = require("express");
 const jwt     = require("jsonwebtoken");
-const config  = require("config");
 const router  = express.Router();
 
 const UserModel = require("../models/User");
 const { auth }  = require("../middleware/auth");
+
+const { signUser } = require('../utilities/auth')
 
 // fetch user
 router.get("/", auth, async (req, res, next) => {
@@ -29,10 +30,13 @@ router.post("/", async (req, res, next) => {
 		}
 
 		const payload = { user: { id: user.id } };
-		jwt.sign(payload, process.env.jwtSecret, { expiresIn: 360000 }, (err, token) => {
-			if (err) throw err;
-			return res.json({ success: true, message: "Successfully Loggedin", user, token });
-		});
+		const token = await signUser(payload)
+		res.json({
+			success: true,
+			message: "Successfully LoggeIn",
+			token,
+			user,
+		})
 	} catch (error) {
 		res.locals.statusCode = 500;
 		res.locals.message = "Server Error at POST '/login'";
@@ -57,15 +61,13 @@ router.post("/register", async (req, res, next) => {
 		await newUser.save();
 		const payload = { user: { id: newUser.id } };
 
-		jwt.sign(payload, process.env.jwtSecret, { expiresIn: 360000 }, (err, token) => {
-			if (err) throw err;
-			return res.json({
-				success: true,
-				message: "User Registered",
-				user: newUser,
-				token
-			});
-		});
+		const token = await signUser(payload)
+		res.json({
+			success: true,
+			message: "Successfully Registered",
+			token,
+			user: newUser,
+		})
 	} catch (error) {
 		res.locals.statusCode = 500;
 		res.locals.message = "Server Error at POST '/register'";

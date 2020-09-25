@@ -1,5 +1,4 @@
 import axios from "axios";
-import setAuthToken from "utilities/setAuthToken";
 
 import {
 	REGISTER_SUCCESS,
@@ -16,7 +15,6 @@ import { toast } from "react-toastify";
 export const loadUser = () => {
 	return async (dispatch) => {
 		try {
-			setAuthToken();
 			const {
 				data: { user }
 			} = await axios.get("/auth");
@@ -39,7 +37,8 @@ export const login = (formData) => {
 			toast.success("Login successful")
 		} catch (error) {
 			dispatch({ type: LOGIN_FAIL });
-			toast.error(error.response.data.message)
+			// toast.error(error.response.data.message)
+			toast.error(error)
 		}
 	};
 };

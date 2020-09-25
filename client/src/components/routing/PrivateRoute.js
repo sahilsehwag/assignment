@@ -11,13 +11,12 @@ const PrivateRoute = (props) => {
 	const { component: Component, ...rest } = props;
 
 	const isAuthenticated = useSelector(state => state.auth.isAuthenticated)
-	const loading         = useSelector(state => state.auth.loading)
 
 	return (
 		<Route
 			{...rest}
 			render={(props) =>
-				!isAuthenticated && !loading ? <Redirect to="/login" /> : <Component {...props} />
+				!isAuthenticated ? <Redirect to="/login" /> : <Component {...props} />
 			}
 		/>
 	);

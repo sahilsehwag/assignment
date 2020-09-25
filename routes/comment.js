@@ -4,7 +4,7 @@ const router = express.Router();
 const CommentModel = require("../models/Comment");
 const { auth } = require("../middleware/auth");
 
-const populateQuery = ([
+const populationQuery = ([
 	{ path: "user" },
 	{
 		path: "replies",
@@ -21,6 +21,7 @@ const populateQuery = ([
 	},
 ])
 
+
 router.get("/", async (req, res, next) => {
 	try {
 		const page = req.query.page;
@@ -29,7 +30,7 @@ router.get("/", async (req, res, next) => {
 			{ __v: false },
 			// { skip: (page - 1) * 100, limit: 100 }
 		)
-			.populate(populateQuery)
+			.populate(populationQuery)
 			// .sort({ downVotes: 1 });
 
 		res.json({
@@ -55,7 +56,7 @@ router.post("/", auth, async (req, res, next) => {
 
 		comment = await (CommentModel
 			.findById(comment.id)
-			.populate(populateQuery)
+			.populate(populationQuery)
 		)
 
 		res.json({
@@ -84,7 +85,7 @@ router.post("/reply", auth, async (req, res, next) => {
 
 		const reply = await (await CommentModel
 			.findById(child.id)
-			.populate(populateQuery)
+			.populate(populationQuery)
 		)
 
 		await CommentModel.findByIdAndUpdate(parentId, {
@@ -135,7 +136,7 @@ router.put("/", auth, async (req, res, next) => {
 
 		const comment = await (CommentModel
 			.findById(commentId)
-			.populate(populateQuery)
+			.populate(populationQuery)
 		)
 		res.json({
 			success: true,

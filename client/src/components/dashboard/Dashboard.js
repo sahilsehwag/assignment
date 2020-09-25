@@ -22,7 +22,6 @@ const Dashboard = () => {
 	const comments        = useSelector(state => state.comment.comments)
 	const isAuthenticated = useSelector(state => state.auth.isAuthenticated)
 	const user            = useSelector(state => state.auth.user)
-	const loading         = useSelector(state => state.auth.loading)
 
 	const [text, setFormData] = useState("");
 	const [page, setPage]     = useState(1);
@@ -52,7 +51,7 @@ const Dashboard = () => {
 	}
 
 
-	if (isAuthenticated && !loading && user) {
+	if (isAuthenticated && user) {
 		return (
 			<div>
 				<form className="mb-" onSubmit={onSubmit}>

@@ -7,15 +7,15 @@ import {
 	LOGIN_FAIL,
 	LOGOUT
 } from "actions/types";
+
 import setAuthToken from "utilities/setAuthToken";
 
-const initialState = {
+
+export default function(state = {
 	token: localStorage.getItem("token"),
 	user: null,
 	isAuthenticated: false,
-};
-
-export default function(state = initialState, action) {
+}, action) {
 	const { type, payload } = action;
 
 	switch (type) {

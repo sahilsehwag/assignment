@@ -10,7 +10,6 @@ import { register } from "actions/AuthActions";
 const Register = () => {
 	const dispatch = useDispatch()
 
-	const loading = useSelector(state => state.auth.loading)
 	const isAuthenticated = useSelector(state => state.auth.isAuthenticated)
 
 	const [formData, setFormData] = useState({ name: "", username: "" });
@@ -27,7 +26,7 @@ const Register = () => {
 
 	return (
 		<Fragment>
-			{!loading && isAuthenticated ? (
+			{isAuthenticated ? (
 				<Fragment>
 					<Redirect to="/dashboard" />
 				</Fragment>
